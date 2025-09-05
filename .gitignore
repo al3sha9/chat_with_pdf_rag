@@ -1,0 +1,8 @@
+*.env
+*.pyc
+__pycache__/
+rag_env/
+venv/
+.env/
+.env.*
+.DS_Store
