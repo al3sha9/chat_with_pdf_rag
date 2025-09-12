@@ -197,17 +197,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Storage**: 2GB for model downloads
 - **Internet**: Required for initial model download and API calls
 
-## 🔮 Future Enhancements
-
-- [ ] Support for multiple document uploads
-- [ ] Chat history persistence
-- [ ] Advanced filtering options
-- [ ] Support for scanned PDFs (OCR)
-- [ ] Export chat conversations
-- [ ] Integration with other LLM providers
-- [ ] Document similarity analysis
-- [ ] Batch processing capabilities
-
 ## 📞 Support
 
 For issues, questions, or contributions, please:
