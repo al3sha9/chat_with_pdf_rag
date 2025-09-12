@@ -11,7 +11,7 @@ A powerful Retrieval-Augmented Generation (RAG) system that allows you to upload
 - **Interactive Chat Interface**: Streamlit-based user-friendly interface
 - **Source Attribution**: Shows relevant document chunks used for answers
 - **Real-time Processing**: Process documents and get answers instantly
-
+- **Chat Memory Saving and document caching**: includes a built-in memory to store previous chat history to answer questions accordingly and also contains document caching which reduces upload time.
 ## 🛠️ Technology Stack
 
 - **Frontend**: Streamlit
