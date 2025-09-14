@@ -217,8 +217,8 @@ class RAGSystem:
 
         return True
 
-    def generate_answer(self, query: str, relevant_chunks: List[DocumentChunk]) -> str:
-        """Generate answer using LLM"""
+    def generate_answer(self, query: str, relevant_chunks: List[DocumentChunk], chat_history: List[Dict[str, Any]] = None) -> str:
+        """Generate answer using LLM with chat history context"""
         if not self.client:
             return "LLM not initialized. Please provide a valid Gemini API key."
 
@@ -228,14 +228,25 @@ class RAGSystem:
             for chunk in relevant_chunks
         ])
 
-        prompt = f"""Based on the following context from the document, please answer the user's question.
+        # Build chat history context
+        chat_context = ""
+        if chat_history:
+            # Get last 3 message pairs for context
+            recent_history = chat_history[-6:]  # Last 3 pairs of messages
+            chat_context = "\nPrevious conversation:\n"
+            for msg in recent_history:
+                role = "User" if msg["role"] == "user" else "Assistant"
+                chat_context += f"{role}: {msg['content']}\n"
 
-Context:
+        prompt = f"""Based on the following context from the document and previous conversation history, please answer the user's question.
+
+Context from document:
 {context}
 
-Question: {query}
+{chat_context}
+Current Question: {query}
 
-Please provide a comprehensive answer based on the information in the context. If the context doesn't contain enough information to answer the question, please say so.
+Please provide a comprehensive answer based on the information in the context and previous conversation. If the context doesn't contain enough information to answer the question, please say so. Make sure to maintain continuity with the previous conversation if relevant.
 
 Answer:"""
 
@@ -245,7 +256,7 @@ Answer:"""
         except Exception as e:
             return f"Error generating answer: {str(e)}"
 
-    def query(self, question: str) -> Dict[str, Any]:
+    def query(self, question: str, chat_history: List[Dict[str, Any]] = None) -> Dict[str, Any]:
         """Main query function"""
         # Search for relevant chunks
         relevant_chunks = self.vector_store.search(question)
@@ -257,8 +268,8 @@ Answer:"""
                 "sources": []
             }
 
-        # Generate answer
-        answer = self.generate_answer(question, relevant_chunks)
+        # Generate answer with chat history context
+        answer = self.generate_answer(question, relevant_chunks, chat_history)
 
         return {
             "answer": answer,
@@ -357,9 +368,9 @@ def main():
                 # Add user message to history
                 st.session_state.chat_history.append({"role": "user", "content": query})
 
-                # Process query
+                # Process query with chat history
                 with st.spinner("Searching and generating answer..."):
-                    result = st.session_state.rag_system.query(query)
+                    result = st.session_state.rag_system.query(query, st.session_state.chat_history)
 
                 # Add assistant response to history
                 st.session_state.chat_history.append({"role": "assistant", "content": result["answer"]})
