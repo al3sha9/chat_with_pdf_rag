@@ -11,7 +11,7 @@ A powerful Retrieval-Augmented Generation (RAG) system that allows you to upload
 - **Interactive Chat Interface**: Streamlit-based user-friendly interface
 - **Source Attribution**: Shows relevant document chunks used for answers
 - **Real-time Processing**: Process documents and get answers instantly
-
+- **Chat Memory Saving and document caching**: includes a built-in memory to store previous chat history to answer questions accordingly and also contains document caching which reduces upload time.
 ## 🛠️ Technology Stack
 
 - **Frontend**: Streamlit
@@ -196,17 +196,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **RAM**: Minimum 4GB (8GB recommended)
 - **Storage**: 2GB for model downloads
 - **Internet**: Required for initial model download and API calls
-
-## 🔮 Future Enhancements
-
-- [ ] Support for multiple document uploads
-- [ ] Chat history persistence
-- [ ] Advanced filtering options
-- [ ] Support for scanned PDFs (OCR)
-- [ ] Export chat conversations
-- [ ] Integration with other LLM providers
-- [ ] Document similarity analysis
-- [ ] Batch processing capabilities
 
 ## 📞 Support
 
